@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ['Robert Mosolgo']
   spec.homepage      = 'https://github.com/rmosolgo/graphql-libgraphqlparser-ruby'
   spec.email         = ['rdmosolgo@gmail.com']
-  spec.summary       = "Use Libgraphqlparser to parse queries in the GraphQL gem"
+  spec.summary       = "Use Libgraphqlparser to parse queries for the GraphQL gem"
   spec.license       = "minitest"
 
   spec.files         = `git ls-files -z`.split("\x0")
@@ -17,12 +17,14 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.add_runtime_dependency 'graphql', '~> 0.10.0'
-  spec.add_runtime_dependency 'libgraphqlparser', '~> 0.0.2'
 
   spec.add_development_dependency 'bundler', '~> 1.7'
   spec.add_development_dependency "guard", "~> 2.12"
   spec.add_development_dependency "guard-bundler", "~> 2.1"
   spec.add_development_dependency "guard-minitest", "~> 2.4"
+  spec.add_development_dependency "guard-rake", "~> 1.0"
   spec.add_development_dependency 'minitest', '~> 5.8'
+  spec.add_development_dependency "minitest-reporters", "~>1.0"
   spec.add_development_dependency 'rake', '~> 10.0'
+  spec.add_development_dependency 'rake-compiler', '~> 0.9'
 end

@@ -10,3 +10,7 @@ guard :minitest do
   watch(%r{^test/test_helper\.rb})  { 'test' }
   watch(%r{^test/support/.*\.rb})   { 'test' }
 end
+
+guard 'rake', task: 'compile' do
+  watch(%r{^ext/libgraphqlparser/.+$})
+end

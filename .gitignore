@@ -1,1 +1,5 @@
+*.bundle
+*.so
 Gemfile.lock
+pkg
+tmp
