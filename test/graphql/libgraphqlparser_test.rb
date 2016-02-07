@@ -228,8 +228,4 @@ describe GraphQL::Libgraphqlparser do
       err = assert_raises(GraphQL::Libgraphqlparser::ParseError) { document }
     end
   end
-
-  describe "node position" do
-    it "gets positions for nodes"
-  end
 end
