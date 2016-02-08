@@ -38,7 +38,7 @@ module GraphQL
         when Nodes::Argument
           current.arguments << node
         when Nodes::InlineFragment, Nodes::FragmentSpread, Nodes::Field
-          current.selection_set << node
+          current.selections << node
         when Nodes::TypeName, Nodes::ListType, Nodes::NonNullType
           # Using ||= because FragmentDefinition has already assigned
           # this as a plain string :(

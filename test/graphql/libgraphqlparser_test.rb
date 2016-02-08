@@ -42,14 +42,14 @@ describe GraphQL::Libgraphqlparser do
         assert_equal "getStuff", query.name
         assert_equal "query", query.operation_type
         assert_equal 2, query.variables.length
-        assert_equal 3, query.selection_set.length
+        assert_equal 3, query.selections.length
         assert_equal [2, 5], [query.line, query.col]
       end
 
       it "creates a valid fragment definition" do
         assert fragment_def.is_a?(GraphQL::Language::Nodes::FragmentDefinition)
         assert_equal "moreNestedFields", fragment_def.name
-        assert_equal 1, fragment_def.selection_set.length
+        assert_equal 1, fragment_def.selections.length
         assert_equal "NestedType", fragment_def.type
         assert_equal [17, 5], fragment_def.position
       end
@@ -71,8 +71,8 @@ describe GraphQL::Libgraphqlparser do
       end
 
       describe "fields" do
-        let(:leaf_field) { query.selection_set.first }
-        let(:parent_field) { query.selection_set[1] }
+        let(:leaf_field) { query.selections.first }
+        let(:parent_field) { query.selections[1] }
 
         it "gets name, alias, arguments and directives" do
           assert_equal "someField", leaf_field.name
@@ -82,7 +82,7 @@ describe GraphQL::Libgraphqlparser do
         end
 
         it "gets nested fields" do
-          assert_equal 2, parent_field.selection_set.length
+          assert_equal 2, parent_field.selections.length
         end
 
         it "gets location info" do
@@ -91,8 +91,8 @@ describe GraphQL::Libgraphqlparser do
       end
 
       describe "arguments" do
-        let(:literal_argument) { query.selection_set.first.arguments.last }
-        let(:variable_argument) { query.selection_set.first.arguments.first }
+        let(:literal_argument) { query.selections.first.arguments.last }
+        let(:variable_argument) { query.selections.first.arguments.first }
 
         it "gets name and literal value" do
           assert_equal "ok", literal_argument.name
@@ -110,7 +110,7 @@ describe GraphQL::Libgraphqlparser do
       end
 
       describe "fragment spreads" do
-        let(:fragment_spread) { query.selection_set[1].selection_set.last }
+        let(:fragment_spread) { query.selections[1].selections.last }
         it "gets the name and directives" do
           assert_equal "moreNestedFields", fragment_spread.name
           assert_equal 1, fragment_spread.directives.length
@@ -122,7 +122,7 @@ describe GraphQL::Libgraphqlparser do
       end
 
       describe "directives" do
-        let(:variable_directive) { query.selection_set.first.directives.first }
+        let(:variable_directive) { query.selections.first.directives.first }
 
         it "gets the name and arguments" do
           assert_equal "skip", variable_directive.name
@@ -136,10 +136,10 @@ describe GraphQL::Libgraphqlparser do
       end
 
       describe "inline fragments" do
-        let(:inline_fragment) { query.selection_set[2] }
+        let(:inline_fragment) { query.selections[2] }
         it "gets the type and directives" do
           assert_equal "OtherType", inline_fragment.type
-          assert_equal 2, inline_fragment.selection_set.length
+          assert_equal 2, inline_fragment.selections.length
           assert_equal 1, inline_fragment.directives.length
         end
 
@@ -163,7 +163,7 @@ describe GraphQL::Libgraphqlparser do
           }
         |}
 
-        let(:inputs) { document.definitions.first.selection_set.first.arguments }
+        let(:inputs) { document.definitions.first.selections.first.arguments }
 
         it "parses ints" do
           assert_equal 3, inputs[0].value
@@ -210,7 +210,7 @@ describe GraphQL::Libgraphqlparser do
         assert_equal 1, document.definitions.length
         assert_equal "query", operation.operation_type
         assert_equal nil, operation.name
-        assert_equal 3, operation.selection_set.length
+        assert_equal 3, operation.selections.length
       end
     end
 

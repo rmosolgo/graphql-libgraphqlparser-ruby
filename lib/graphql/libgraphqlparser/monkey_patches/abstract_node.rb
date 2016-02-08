@@ -18,7 +18,7 @@ module GraphQL
       # Document = AbstractNode.create(:parts)
       class Document
         def definitions
-          @definitions ||= []
+          @parts ||= []
         end
       end
 
@@ -28,8 +28,8 @@ module GraphQL
           @variables ||= []
         end
 
-        def selection_set
-          @selection_set ||= []
+        def selections
+          @selections ||= []
         end
       end
 
@@ -46,15 +46,15 @@ module GraphQL
 
       # FragmentDefinition = AbstractNode.create(:name, :type, :directives, :selections)
       class FragmentDefinition
-        def selection_set
-          @selection_set ||= []
+        def selections
+          @selections ||= []
         end
       end
 
       # Field = AbstractNode.create(:name, :alias, :arguments, :directives, :selections)
       class Field
-        def selection_set
-          @selection_set ||= []
+        def selections
+          @selections ||= []
         end
 
         def directives
@@ -85,8 +85,8 @@ module GraphQL
         def directives
           @directives ||= []
         end
-        def selection_set
-          @selection_set ||= []
+        def selections
+          @selections ||= []
         end
       end
 
