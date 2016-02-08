@@ -14,4 +14,4 @@ Rake::ExtensionTask.new "libgraphqlparser" do |ext|
   ext.lib_dir = "lib/graphql/libgraphqlparser"
 end
 
-task default: [:compile, :test]
+task default: [:clobber, :compile, :test]
