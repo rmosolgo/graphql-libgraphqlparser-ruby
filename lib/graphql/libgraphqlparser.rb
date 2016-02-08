@@ -11,4 +11,16 @@ module GraphQL
       builder.document
     end
   end
+
+  class << self
+    def parse_with_libgraphqlparser(string)
+      Libgraphqlparser.parse(string)
+    end
+
+    alias :parse_without_libgraphqlparser :parse
+
+    def parse(string, as: nil)
+      parse_with_libgraphqlparser(string)
+    end
+  end
 end
