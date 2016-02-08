@@ -1,10 +1,4 @@
-#ifndef Libgraphqlparser_visitor_functions_C
-#define Libgraphqlparser_visitor_functions_C
-
-#include "c/GraphQLAst.h"
-#include "c/GraphQLAstNode.h"
-#include <ruby.h>
-#include <ruby/encoding.h>
+#include "libgraphqlparser.h"
 
 // These macros are a bit janky,
 // they depend on the function signature
@@ -310,5 +304,3 @@ int object_field_begin_visit(const struct GraphQLAstObjectField* node, void* bui
 void object_field_end_visit(const struct GraphQLAstObjectField* node, void* builder_ptr) {
   END
 }
-
-#endif

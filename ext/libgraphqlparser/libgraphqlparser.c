@@ -1,11 +1,4 @@
-#ifndef Libgraphqlparser_EXT
-#define Libgraphqlparser_EXT
-
-#include <ruby.h>
-#include "c/GraphQLParser.h"
-#include "c/GraphQLAstNode.h"
-#include "c/GraphQLAstVisitor.h"
-#include "c/GraphQLAst.h"
+#include "libgraphqlparser.h"
 #include "visitor_functions.h"
 
 #define ATTACH_CALLBACKS(node_name)       \
@@ -70,5 +63,3 @@ void Init_libgraphqlparser(void) {
   ATTACH_CALLBACKS(object_value)
   ATTACH_CALLBACKS(object_field)
 }
-
-#endif

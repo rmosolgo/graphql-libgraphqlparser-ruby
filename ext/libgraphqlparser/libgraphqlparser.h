@@ -2,7 +2,12 @@
 #define Libgraphqlparser_EXT_H
 
 #include <ruby.h>
+#include <ruby/encoding.h>
+#include <c/GraphQLParser.h>
+#include <c/GraphQLAstNode.h>
+#include <c/GraphQLAstVisitor.h>
+#include <c/GraphQLAst.h>
 
-VALUE Libgraphqlparser_ParseError;
 void Init_libgraphqlparser(void);
+
 #endif

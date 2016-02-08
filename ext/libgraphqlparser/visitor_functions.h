@@ -1,9 +1,6 @@
 #ifndef Libgraphqlparser_visitor_functions_H
 #define Libgraphqlparser_visitor_functions_H
 
-#include "c/GraphQLAst.h"
-#include "libgraphqlparser.h"
-
 #define VISITOR_CALLBACKS(snake_name, camel_name) \
   int snake_name##_begin_visit(const struct GraphQLAst##camel_name* document, void* builder_ptr); \
   void snake_name##_end_visit(const struct GraphQLAst##camel_name* document, void* builder_ptr); \
