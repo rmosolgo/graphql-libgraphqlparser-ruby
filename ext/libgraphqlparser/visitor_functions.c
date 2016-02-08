@@ -78,6 +78,7 @@ void document_end_visit(const struct GraphQLAstDocument* node, void* builder_ptr
 int operation_definition_begin_visit(const struct GraphQLAstOperationDefinition* node, void* builder_ptr) {
   const struct GraphQLAstName* ast_operation_name;
   const char* operation_type;
+  VALUE operation_type_str;
 
   BEGIN("OperationDefinition")
 
@@ -89,7 +90,6 @@ int operation_definition_begin_visit(const struct GraphQLAstOperationDefinition*
 
   operation_type = GraphQLAstOperationDefinition_get_operation(node);
 
-  VALUE operation_type_str;
   if (operation_type) {
     operation_type_str = rb_str_new2(operation_type);
   } else {
