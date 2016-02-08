@@ -6,30 +6,20 @@
 #include <ruby.h>
 #include <ruby/encoding.h>
 
-
-
-
 // These macros are a bit janky,
 // they depend on the function signature
 // being the same all the time: `(GraphQLAstNode* node, void* builder_ptr)`.
 //
 // Then they provide `rb_node` that you can work on in the function body.
-#define BEGIN(node_name_string)              \
-  VALUE builder = (VALUE) builder_ptr;                    \
-  ID begin_visit = rb_intern("begin_visit");              \
-  VALUE node_class_name = rb_str_new2(node_name_string);  \
-  VALUE rb_node = rb_funcall(builder, begin_visit, 1, node_class_name);   \
+#define BEGIN(node_name_string)                           \
+  VALUE rb_node = rb_funcall((VALUE) builder_ptr, rb_intern("begin_visit"), 1, rb_str_new2(node_name_string));   \
   ADD_LOCATION_INFO                                       \
 
-#define END                                               \
-  VALUE builder = (VALUE) builder_ptr;                    \
-  ID end_visit = rb_intern("end_visit");                  \
-  rb_funcall(builder, end_visit, 0);                      \
+#define END                                                   \
+  rb_funcall((VALUE) builder_ptr, rb_intern("end_visit"), 0); \
 
-#define ADD_LITERAL(rb_value)                             \
-  VALUE builder = (VALUE) builder_ptr;                    \
-  ID add_value = rb_intern("add_value");                  \
-  rb_funcall(builder, add_value, 1, rb_value);            \
+#define ADD_LITERAL(rb_value)                                           \
+  rb_funcall((VALUE) builder_ptr, rb_intern("add_value"), 1, rb_value); \
 
 #define ADD_LOCATION_INFO        \
   struct GraphQLAstLocation* location = malloc(sizeof(struct GraphQLAstLocation)); \
@@ -37,6 +27,15 @@
   rb_funcall(rb_node, rb_intern("line="), 1, INT2NUM(location->beginLine)); \
   rb_funcall(rb_node, rb_intern("col="), 1, INT2NUM(location->beginColumn)); \
   free(location); \
+
+#define ASSIGN_NAME(get_name_fn)              \
+  rb_funcall(rb_node, rb_intern("name="), 1,  \
+    rb_str_new2(                              \
+      GraphQLAstName_get_value(               \
+          get_name_fn(node)                   \
+        )                                     \
+      )                                       \
+    );                                        \
 
 // There's a `begin_visit` and `end_visit` for each node.
 // Some of the end_visit callbacks are empty but that's ok,
@@ -90,10 +89,7 @@ void variable_definition_end_visit(const struct GraphQLAstVariableDefinition* no
 
 int fragment_definition_begin_visit(const struct GraphQLAstFragmentDefinition* node, void* builder_ptr) {
   BEGIN("FragmentDefinition")
-
-  const struct GraphQLAstName* ast_name = GraphQLAstFragmentDefinition_get_name(node);
-  const char* str_name = GraphQLAstName_get_value(ast_name);
-  rb_funcall(rb_node, rb_intern("name="), 1, rb_str_new2(str_name));
+  ASSIGN_NAME(GraphQLAstFragmentDefinition_get_name)
 
   const struct GraphQLAstNamedType* ast_named_type = GraphQLAstFragmentDefinition_get_type_condition(node);
   const struct GraphQLAstName* ast_named_type_ast_name = GraphQLAstNamedType_get_name(ast_named_type);
@@ -111,9 +107,7 @@ void fragment_definition_end_visit(const struct GraphQLAstFragmentDefinition* no
 int variable_begin_visit(const struct GraphQLAstVariable* node, void* builder_ptr) {
   BEGIN("VariableIdentifier")
   // This might actually assign the name of a VariableDefinition:
-  const struct GraphQLAstName* ast_name = GraphQLAstVariable_get_name(node);
-  const char* str_name = GraphQLAstName_get_value(ast_name);
-  rb_funcall(rb_node, rb_intern("name="), 1, rb_str_new2(str_name));
+  ASSIGN_NAME(GraphQLAstVariable_get_name)
 
   return 1;
 }
@@ -124,10 +118,7 @@ void variable_end_visit(const struct GraphQLAstVariable* node, void* builder_ptr
 
 int field_begin_visit(const struct GraphQLAstField* node, void* builder_ptr) {
   BEGIN("Field")
-
-  const struct GraphQLAstName* ast_field_name = GraphQLAstField_get_name(node);
-  const char* str_field_name = GraphQLAstName_get_value(ast_field_name);
-  rb_funcall(rb_node, rb_intern("name="), 1, rb_str_new2(str_field_name));
+  ASSIGN_NAME(GraphQLAstField_get_name)
 
   const struct GraphQLAstName* ast_field_alias = GraphQLAstField_get_alias(node);
   if (ast_field_alias) {
@@ -144,10 +135,7 @@ void field_end_visit(const struct GraphQLAstField* node, void* builder_ptr) {
 
 int directive_begin_visit(const struct GraphQLAstDirective* node, void* builder_ptr) {
   BEGIN("Directive")
-
-  const struct GraphQLAstName* ast_name = GraphQLAstDirective_get_name(node);
-  const char* str_name = GraphQLAstName_get_value(ast_name);
-  rb_funcall(rb_node, rb_intern("name="), 1, rb_str_new2(str_name));
+  ASSIGN_NAME(GraphQLAstDirective_get_name)
 
   return 1;
 }
@@ -158,10 +146,7 @@ void directive_end_visit(const struct GraphQLAstDirective* node, void* builder_p
 
 int argument_begin_visit(const struct GraphQLAstArgument* node, void* builder_ptr) {
   BEGIN("Argument")
-
-  const struct GraphQLAstName* ast_name = GraphQLAstArgument_get_name(node);
-  const char* str_name = GraphQLAstName_get_value(ast_name);
-  rb_funcall(rb_node, rb_intern("name="), 1, rb_str_new2(str_name));
+  ASSIGN_NAME(GraphQLAstArgument_get_name)
 
   return 1;
 }
@@ -172,10 +157,7 @@ void argument_end_visit(const struct GraphQLAstArgument* node, void* builder_ptr
 
 int fragment_spread_begin_visit(const struct GraphQLAstFragmentSpread* node, void* builder_ptr) {
   BEGIN("FragmentSpread")
-
-  const struct GraphQLAstName* ast_name = GraphQLAstFragmentSpread_get_name(node);
-  const char* str_name = GraphQLAstName_get_value(ast_name);
-  rb_funcall(rb_node, rb_intern("name="), 1, rb_str_new2(str_name));
+  ASSIGN_NAME(GraphQLAstFragmentSpread_get_name)
 
   return 1;
 }
@@ -220,10 +202,7 @@ void non_null_type_end_visit(const struct GraphQLAstNonNullType* node, void* bui
 
 int named_type_begin_visit(const struct GraphQLAstNamedType* node, void* builder_ptr) {
   BEGIN("TypeName")
-
-  const struct GraphQLAstName* ast_name = GraphQLAstNamedType_get_name(node);
-  const char* str_name = GraphQLAstName_get_value(ast_name);
-  rb_funcall(rb_node, rb_intern("name="), 1, rb_str_new2(str_name));
+  ASSIGN_NAME(GraphQLAstNamedType_get_name)
 
   return 1;
 }
@@ -310,11 +289,7 @@ void object_value_end_visit(const struct GraphQLAstObjectValue* node, void* buil
 
 int object_field_begin_visit(const struct GraphQLAstObjectField* node, void* builder_ptr) {
   BEGIN("Argument")
-
-  const struct GraphQLAstName* ast_name = GraphQLAstObjectField_get_name(node);
-  const char* str_name = GraphQLAstName_get_value(ast_name);
-  rb_funcall(rb_node, rb_intern("name="), 1, rb_str_new2(str_name));
-
+  ASSIGN_NAME(GraphQLAstObjectField_get_name)
   return 1;
 }
 
