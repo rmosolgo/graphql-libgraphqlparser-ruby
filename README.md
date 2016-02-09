@@ -1,4 +1,4 @@
-# graphql-libgraphqlparser [![Build Status](https://travis-ci.org/rmosolgo/graphql-libgraphqlparser-ruby.svg?branch=master)](https://travis-ci.org/rmosolgo/graphql-libgraphqlparser-ruby)
+# graphql-libgraphqlparser [![Build Status](https://travis-ci.org/rmosolgo/graphql-libgraphqlparser-ruby.svg?branch=master)](https://travis-ci.org/rmosolgo/graphql-libgraphqlparser-ruby) [![Gem Version](https://badge.fury.io/rb/graphql-libgraphqlparser.svg)](https://badge.fury.io/rb/graphql-libgraphqlparser)
 
 Make [`graphql`](https://github.com/rmosolgo/graphql-ruby) faster with [`libgraphqlparser`](https://github.com/graphql/libgraphqlparser). Ruby bindings to a C-level GraphQL parser.
 
@@ -23,8 +23,8 @@ C         0.010000   0.000000   0.010000 (  0.008584)
 
 This gem depends on [libgraphqlparser](https://github.com/graphql/libgraphqlparser). You can install it a few ways:
 
-- __Homebrew__: `brew install libgraphqlparser`
-- __From Source__:
+- Homebrew: `brew install libgraphqlparser`
+- From Source:
 
   ```
   wget https://github.com/graphql/libgraphqlparser/archive/v0.4.0.tar.gz
