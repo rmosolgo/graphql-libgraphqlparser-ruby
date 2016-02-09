@@ -8,34 +8,34 @@
 #define BEGIN(node_name_string)     \
   VALUE rb_node = rb_funcall(       \
       (VALUE) builder_ptr,          \
-      rb_intern("begin_visit"),     \
+      begin_visit_intern,           \
       1,                            \
       rb_str_new2(node_name_string) \
     );                              \
   struct GraphQLAstLocation* location = malloc(sizeof(struct GraphQLAstLocation)); \
   graphql_node_get_location((struct GraphQLAstNode *)node, location);            \
-  rb_funcall(rb_node, rb_intern("line="), 1, INT2NUM(location->beginLine)); \
-  rb_funcall(rb_node, rb_intern("col="), 1, INT2NUM(location->beginColumn)); \
-  free(location); \
+  rb_funcall(rb_node, line_set_intern, 1, INT2NUM(location->beginLine)); \
+  rb_funcall(rb_node, col_set_intern, 1, INT2NUM(location->beginColumn)); \
+  free(location);                   \
 
 #define END                         \
   rb_funcall(                       \
     (VALUE) builder_ptr,            \
-    rb_intern("end_visit"),         \
+    end_visit_intern,               \
     0                               \
   );                                \
 
 #define ADD_LITERAL(rb_value)       \
   rb_funcall(                       \
       (VALUE) builder_ptr,          \
-      rb_intern("add_value"),       \
+      add_value_intern,             \
       1,                            \
       rb_value                      \
   );                                \
 
 
 #define ASSIGN_NAME(get_name_fn)              \
-  rb_funcall(rb_node, rb_intern("name="), 1,  \
+  rb_funcall(rb_node, name_set_intern, 1,     \
     rb_str_new2(                              \
       GraphQLAstName_get_value(               \
           get_name_fn(node)                   \
@@ -46,7 +46,7 @@
 #define ASSIGN_NAMED_TYPE(get_type_fn)    \
   rb_funcall(                             \
     rb_node,                              \
-    rb_intern("type="),                   \
+    type_set_intern,                      \
     1,                                    \
     rb_str_new2(                          \
       GraphQLAstName_get_value(           \
@@ -56,6 +56,17 @@
       )                                   \
     )                                     \
   );                                      \
+
+VALUE type_set_intern, name_set_intern, add_value_intern, end_visit_intern, begin_visit_intern, line_set_intern, col_set_intern;
+void init_visitor_functions() {
+  type_set_intern = rb_intern("type=");
+  name_set_intern = rb_intern("name=");
+  add_value_intern = rb_intern("add_value");
+  end_visit_intern = rb_intern("end_visit");
+  begin_visit_intern = rb_intern("begin_visit");
+  line_set_intern = rb_intern("line=");
+  col_set_intern = rb_intern("col=");
+}
 
 // There's a `begin_visit` and `end_visit` for each node.
 // Some of the end_visit callbacks are empty but that's ok,
@@ -79,7 +90,7 @@ int operation_definition_begin_visit(const struct GraphQLAstOperationDefinition*
   ast_operation_name = GraphQLAstOperationDefinition_get_name(node);
   if (ast_operation_name) {
     const char* operation_name = GraphQLAstName_get_value(ast_operation_name);
-    rb_funcall(rb_node, rb_intern("name="), 1, rb_str_new2(operation_name));
+    rb_funcall(rb_node, name_set_intern, 1, rb_str_new2(operation_name));
   }
 
   operation_type = GraphQLAstOperationDefinition_get_operation(node);
