@@ -1,8 +1,8 @@
 require 'graphql'
 require 'graphql/libgraphqlparser/builder'
-require 'graphql/libgraphqlparser/libgraphqlparser'
 require 'graphql/libgraphqlparser/monkey_patches/abstract_node'
 require 'graphql/libgraphqlparser/version'
+require_relative '../libgraphqlparser'
 
 module GraphQL
   module Libgraphqlparser
