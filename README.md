@@ -43,9 +43,3 @@ When you `require` this gem, it overrides `GraphQL.parse`:
 ```ruby
 require "graphql/libgraphqlparser"
 ```
-
-## Todo
-
-- Get directives from OperationDefinitions
-- AbstractNode overrides are full of tension. Resolve that tension with GraphQL main.
-- Node `#type` is sometimes a String, sometimes a Node. That should always be the same.

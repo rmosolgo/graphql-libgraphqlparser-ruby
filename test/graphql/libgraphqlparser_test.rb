@@ -3,7 +3,7 @@ require 'test_helper'
 describe GraphQL::Libgraphqlparser do
   let(:document) { GraphQL::Libgraphqlparser.parse(query_string) }
   let(:query_string) {%|
-    query getStuff($someVar: Int = 1, $anotherVar: [String!] ) {
+    query getStuff($someVar: Int = 1, $anotherVar: [String!] ) @skip(if: false) {
       myField: someField(someArg: $someVar, ok: 1.4) @skip(if: $anotherVar) @thing(or: "Whatever")
 
       anotherField(someArg: [1,2,3]) {
@@ -18,7 +18,7 @@ describe GraphQL::Libgraphqlparser do
 
     }
 
-    fragment moreNestedFields on NestedType {
+    fragment moreNestedFields on NestedType @or(something: "ok") {
       anotherNestedField
     }
   |}
@@ -43,6 +43,7 @@ describe GraphQL::Libgraphqlparser do
         assert_equal "query", query.operation_type
         assert_equal 2, query.variables.length
         assert_equal 3, query.selections.length
+        assert_equal 1, query.directives.length
         assert_equal [2, 5], [query.line, query.col]
       end
 
@@ -51,6 +52,7 @@ describe GraphQL::Libgraphqlparser do
         assert_equal "moreNestedFields", fragment_def.name
         assert_equal 1, fragment_def.selections.length
         assert_equal "NestedType", fragment_def.type
+        assert_equal 1, fragment_def.directives.length
         assert_equal [17, 5], fragment_def.position
       end
 
