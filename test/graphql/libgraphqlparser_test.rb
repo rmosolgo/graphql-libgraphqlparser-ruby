@@ -184,7 +184,8 @@ describe GraphQL::Libgraphqlparser do
         end
 
         it "parses enums" do
-          assert_equal "ENUM_NAME", inputs[4].value
+          assert_instance_of GraphQL::Language::Nodes::Enum, inputs[4].value
+          assert_equal "ENUM_NAME", inputs[4].value.name
         end
 
         it "parses arrays" do

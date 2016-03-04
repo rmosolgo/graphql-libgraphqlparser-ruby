@@ -14,14 +14,13 @@ module GraphQL
         end
         def type; self.of_type; end
       end
+
       class NonNullType
         def type=(inner_type)
           self.of_type = inner_type
         end
         def type; self.of_type; end
       end
-
-
 
       class ArrayLiteral < AbstractNode
         attr_reader :values

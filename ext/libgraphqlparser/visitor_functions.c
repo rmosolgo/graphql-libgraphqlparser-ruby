@@ -277,15 +277,17 @@ void string_value_end_visit(const struct GraphQLAstStringValue* node, void* buil
 }
 
 int enum_value_begin_visit(const struct GraphQLAstEnumValue* node, void* builder_ptr) {
+  BEGIN("Enum");
   const char* str_value = GraphQLAstEnumValue_get_value(node);
   VALUE rb_string = rb_str_new2(str_value);
   int enc = rb_enc_find_index("UTF-8");
   rb_enc_associate_index(rb_string, enc);
-  ADD_LITERAL(rb_string);
+  rb_funcall(rb_node, name_set_intern, 1, rb_string);
   return 1;
 }
 
 void enum_value_end_visit(const struct GraphQLAstEnumValue* node, void* builder_ptr) {
+  END;
 }
 
 int array_value_begin_visit(const struct GraphQLAstArrayValue* node, void* builder_ptr) {

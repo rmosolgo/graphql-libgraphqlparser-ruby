@@ -48,6 +48,8 @@ module GraphQL
           current.value = node.values
         when Nodes::InputObject
           current.value = node
+        when Nodes::Enum
+          current.value = node
         end
 
         @ast_stack.push(node)
