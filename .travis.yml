@@ -3,6 +3,7 @@ cache: bundler
 sudo: required
 rvm:
   - 2.2
+  - 2.3
 addons:
   apt:
     packages:
