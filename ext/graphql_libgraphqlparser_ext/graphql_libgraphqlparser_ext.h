@@ -8,6 +8,6 @@
 #include <c/GraphQLAstVisitor.h>
 #include <c/GraphQLAst.h>
 
-void Init_libgraphqlparser();
+void Init_graphql_libgraphqlparser_ext();
 
 #endif
