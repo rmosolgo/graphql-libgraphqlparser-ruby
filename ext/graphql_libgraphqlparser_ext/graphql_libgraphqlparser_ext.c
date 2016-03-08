@@ -1,4 +1,4 @@
-#include "libgraphqlparser.h"
+#include "graphql_libgraphqlparser_ext.h"
 #include "visitor_functions.h"
 
 #define ATTACH_CALLBACKS(node_name)                                         \
@@ -33,7 +33,7 @@ VALUE GraphQL_Libgraphqlparser_parse(VALUE self, VALUE query_string) {
 }
 
 // Initialize the extension
-void Init_libgraphqlparser() {
+void Init_graphql_libgraphqlparser_ext() {
   VALUE GraphQL = rb_define_module("GraphQL");
   VALUE Libgraphqlparser = rb_define_module_under(GraphQL, "Libgraphqlparser");
   rb_define_singleton_method(Libgraphqlparser, "builder_parse", GraphQL_Libgraphqlparser_parse, 1);

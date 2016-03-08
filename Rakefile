@@ -10,7 +10,7 @@ Rake::TestTask.new do |t|
   t.pattern = "test/**/*_test.rb"
 end
 
-Rake::ExtensionTask.new "libgraphqlparser" do |ext|
+Rake::ExtensionTask.new "graphql_libgraphqlparser_ext" do |ext|
 
 end
 

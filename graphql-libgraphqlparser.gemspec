@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
   spec.summary       = "Use Libgraphqlparser to parse queries for the GraphQL gem"
   spec.license       = "minitest"
 
-  spec.extensions    = ['ext/libgraphqlparser/extconf.rb']
+  spec.extensions    = ['ext/graphql_libgraphqlparser_ext/extconf.rb']
   spec.files         = `git ls-files -z`.split("\x0")
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
