@@ -32,6 +32,8 @@ This gem depends on [libgraphqlparser](https://github.com/graphql/libgraphqlpars
   cd libgraphqlparser-0.4.0/ && cmake . && make && make install
   ```
 
+- With [`heroku-buildpack-libgraphqlparser`](https://github.com/goco-inc/heroku-buildpack-libgraphqlparser)
+
 Then, install this gem:
 
 ```ruby
