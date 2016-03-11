@@ -13,7 +13,7 @@ static struct GraphQLAstVisitorCallbacks Libgraphqlparser_Callbacks;
 // Given a Ruby querystring, return a
 // GraphQL::Nodes::Document instance.
 VALUE GraphQL_Libgraphqlparser_parse(VALUE self, VALUE query_string) {
-  const char* c_query_string = StringValuePtr(query_string);
+  const char* c_query_string = StringValueCStr(query_string);
   const char* parse_error_message;
   VALUE exception;
   VALUE builder = Qnil;
