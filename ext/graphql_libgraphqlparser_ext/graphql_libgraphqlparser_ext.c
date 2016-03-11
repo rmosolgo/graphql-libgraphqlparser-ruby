@@ -21,9 +21,9 @@ VALUE GraphQL_Libgraphqlparser_parse(VALUE self, VALUE query_string) {
   struct GraphQLAstNode *parse_result = graphql_parse_string(c_query_string, &parse_error_message);
 
   if (parse_result == NULL) {
-      exception = rb_exc_new_cstr(Libgraphqlparser_ParseError, parse_error_message);
-      graphql_error_free(parse_error_message);
-      rb_exc_raise(exception);
+    exception = rb_exc_new_cstr(Libgraphqlparser_ParseError, parse_error_message);
+    graphql_error_free(parse_error_message);
+    rb_exc_raise(exception);
   } else {
     builder = rb_class_new_instance(0, NULL, Libgraphqlparser_Builder);
     graphql_node_visit(parse_result, &Libgraphqlparser_Callbacks, (void*)builder);
