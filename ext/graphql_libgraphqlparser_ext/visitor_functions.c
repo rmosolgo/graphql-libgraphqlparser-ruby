@@ -12,11 +12,7 @@
       1,                            \
       rb_str_new2(node_name_string) \
     );                              \
-  struct GraphQLAstLocation* location = malloc(sizeof(struct GraphQLAstLocation)); \
-  graphql_node_get_location((struct GraphQLAstNode *)node, location);            \
-  rb_funcall(rb_node, line_set_intern, 1, INT2NUM(location->beginLine)); \
-  rb_funcall(rb_node, col_set_intern, 1, INT2NUM(location->beginColumn)); \
-  free(location);                   \
+  set_node_location((struct GraphQLAstNode *)node, rb_node);
 
 #define END                         \
   rb_funcall(                       \
@@ -58,6 +54,14 @@
   );                                      \
 
 VALUE type_set_intern, name_set_intern, add_value_intern, end_visit_intern, begin_visit_intern, line_set_intern, col_set_intern;
+
+inline void set_node_location(const struct GraphQLAstNode *node, VALUE rb_node) {
+  struct GraphQLAstLocation location = {0};
+  graphql_node_get_location(node, &location);
+  rb_funcall(rb_node, line_set_intern, 1, INT2NUM(location.beginLine));
+  rb_funcall(rb_node, col_set_intern, 1, INT2NUM(location.beginColumn));
+}
+
 void init_visitor_functions() {
   type_set_intern = rb_intern("type=");
   name_set_intern = rb_intern("name=");
