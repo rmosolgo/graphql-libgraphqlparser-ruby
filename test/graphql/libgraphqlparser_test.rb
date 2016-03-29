@@ -148,6 +148,15 @@ describe GraphQL::Libgraphqlparser do
         it "gets position info" do
           assert_equal [10, 7], inline_fragment.position
         end
+
+        describe "without type condition" do
+          let(:query_string) { 'query { ... @skip(if: false) { field } }' }
+          let(:inline_fragment) { query.selections[0] }
+          it "gets directives and nil type" do
+            assert_equal nil, inline_fragment.type
+            assert_equal 1, inline_fragment.directives.length
+          end
+        end
       end
 
       describe "inputs" do
