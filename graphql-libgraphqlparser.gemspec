@@ -17,13 +17,15 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ['lib']
 
-  spec.add_runtime_dependency 'graphql', '~> 0.18.6'
+  spec.add_runtime_dependency 'graphql', '~> 0.11'
 
   spec.add_development_dependency 'bundler', '~> 1.0'
   spec.add_development_dependency "guard", "~> 2.12"
   spec.add_development_dependency "guard-bundler", "~> 2.1"
   spec.add_development_dependency "guard-minitest", "~> 2.4"
   spec.add_development_dependency "guard-rake", "~> 1.0"
+  # Lock to a lower version to support Ruby 2.1
+  spec.add_development_dependency "listen", "~> 3.0.0"
   spec.add_development_dependency 'minitest', '~> 5.8'
   spec.add_development_dependency "minitest-reporters", "~>1.0"
   spec.add_development_dependency 'rake', '~> 11.0'
