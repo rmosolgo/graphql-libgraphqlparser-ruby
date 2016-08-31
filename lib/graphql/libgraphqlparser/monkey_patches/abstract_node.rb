@@ -22,7 +22,7 @@ module GraphQL
         def type; self.of_type; end
       end
 
-      class ArrayLiteral < AbstractNode
+      class ListLiteral < AbstractNode
         attr_reader :values
 
         def initialize

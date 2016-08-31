@@ -24,7 +24,7 @@ VISITOR_CALLBACKS(int_value, IntValue);
 VISITOR_CALLBACKS(boolean_value, BooleanValue);
 VISITOR_CALLBACKS(string_value, StringValue);
 VISITOR_CALLBACKS(enum_value, EnumValue);
-VISITOR_CALLBACKS(array_value, ArrayValue);
+VISITOR_CALLBACKS(list_value, ListValue);
 VISITOR_CALLBACKS(object_value, ObjectValue);
 VISITOR_CALLBACKS(object_field, ObjectField);
 
