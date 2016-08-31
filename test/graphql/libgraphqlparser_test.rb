@@ -237,7 +237,7 @@ describe GraphQL::Libgraphqlparser do
   describe "errors" do
     let(:query_string) {%| query doSomething { bogus { } |}
     it "raises a parse error" do
-      err = assert_raises(GraphQL::Libgraphqlparser::ParseError) { document }
+      err = assert_raises(GraphQL::ParseError) { document }
     end
   end
 end
