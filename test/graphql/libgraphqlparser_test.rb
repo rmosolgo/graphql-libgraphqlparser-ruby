@@ -239,5 +239,14 @@ describe GraphQL::Libgraphqlparser do
     it "raises a parse error" do
       err = assert_raises(GraphQL::ParseError) { document }
     end
+
+    it "raises a parse error in query with null byte" do
+      err = assert_raises(GraphQL::ParseError) do
+        GraphQL::Libgraphqlparser.parse("mutation{\nsend(message: \"null\x00byte\")\n}")
+      end
+      assert_equal err.message, "Invalid null byte in query"
+      assert_equal err.line, 2
+      assert_equal err.col, 20
+    end
   end
 end
