@@ -1,5 +1,9 @@
 # Changelog
 
+# 0.4.0
+
+- Raise a `ParseError` when the query string contains a null byte
+
 # 0.3.0
 
 - Fix inline fragments without type conditions
