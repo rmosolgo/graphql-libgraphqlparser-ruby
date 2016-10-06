@@ -21,15 +21,15 @@ C         0.010000   0.000000   0.010000 (  0.008584)
 
 ## Installation
 
-This gem depends on [libgraphqlparser](https://github.com/graphql/libgraphqlparser). You can install it a few ways:
+This gem depends on [libgraphqlparser](https://github.com/graphql/libgraphqlparser) (>= 0.5.0). You can install it a few ways:
 
 - Homebrew: `brew install libgraphqlparser`
 - From Source:
 
   ```
-  wget https://github.com/graphql/libgraphqlparser/archive/v0.4.0.tar.gz
-  tar -xzvf v0.4.0.tar.gz
-  cd libgraphqlparser-0.4.0/ && cmake . && make && make install
+  wget https://github.com/graphql/libgraphqlparser/archive/v0.5.0.tar.gz
+  tar -xzvf v0.5.0.tar.gz
+  cd libgraphqlparser-0.5.0/ && cmake . && make && make install
   ```
 
 - With [`heroku-buildpack-libgraphqlparser`](https://github.com/goco-inc/heroku-buildpack-libgraphqlparser)
@@ -45,3 +45,12 @@ When you `require` this gem, it overrides `GraphQL.parse`:
 ```ruby
 require "graphql/libgraphqlparser"
 ```
+
+## Libgraphqlparser versions
+
+The Ruby gem expects certain versions of `libgraphqlparser` to be installed. I couldn't figure out how to check this in [`extconf.rb`](#), so I documented it here:
+
+`libgraphqlparser` version | `graphql-libgraphqlparser`(Ruby gem)  version
+----|----
+>= 0.5.0 | 0.5.0
+<= 0.4.0 | 0.4.0

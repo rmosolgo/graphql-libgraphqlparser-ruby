@@ -1,5 +1,9 @@
 # Changelog
 
+# 0.5.0
+
+- Support `libgraphqlparser` 0.5.0 (but not 0.4.0)
+
 # 0.4.0
 
 - Raise a `ParseError` when the query string contains a null byte
