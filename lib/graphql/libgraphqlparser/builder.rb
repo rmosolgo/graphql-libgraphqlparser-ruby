@@ -43,7 +43,7 @@ module GraphQL
           # Using ||= because FragmentDefinition has already assigned
           # this as a plain string :(
           current.type ||= node
-        when Nodes::ArrayLiteral
+        when Nodes::ListLiteral
           # mutability! 🎉
           current.value = node.values
         when Nodes::InputObject

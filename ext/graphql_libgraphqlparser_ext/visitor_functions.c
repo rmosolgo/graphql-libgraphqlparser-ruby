@@ -301,12 +301,12 @@ void enum_value_end_visit(const struct GraphQLAstEnumValue* node, void* builder_
   END;
 }
 
-int array_value_begin_visit(const struct GraphQLAstArrayValue* node, void* builder_ptr) {
-  BEGIN("ArrayLiteral")
+int list_value_begin_visit(const struct GraphQLAstListValue* node, void* builder_ptr) {
+  BEGIN("ListLiteral")
   return 1;
 }
 
-void array_value_end_visit(const struct GraphQLAstArrayValue* node, void* builder_ptr) {
+void list_value_end_visit(const struct GraphQLAstListValue* node, void* builder_ptr) {
   END
 }
 
