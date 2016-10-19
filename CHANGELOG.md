@@ -1,5 +1,9 @@
 # Changelog
 
+# 0.5.1
+
+- Fix strings with a null byte but no newline character #16
+
 # 0.5.0
 
 - Support `libgraphqlparser` 0.5.0 (but not 0.4.0)
