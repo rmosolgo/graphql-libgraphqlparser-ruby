@@ -14,7 +14,7 @@ module GraphQL
         if index = string.index("\x00")
           string_before_null = string.slice(0, index)
           line = string_before_null.count("\n") + 1
-          col = index - string_before_null.rindex("\n") || 0
+          col = index - (string_before_null.rindex("\n") || 0)
           raise GraphQL::ParseError.new("Invalid null byte in query", line, col, string)
         end
         raise
