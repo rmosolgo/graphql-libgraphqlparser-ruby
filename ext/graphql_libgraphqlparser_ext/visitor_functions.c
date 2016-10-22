@@ -39,20 +39,6 @@
       )                                       \
     );                                        \
 
-#define ASSIGN_NAMED_TYPE(type)           \
-  rb_funcall(                             \
-    rb_node,                              \
-    type_set_intern,                      \
-    1,                                    \
-    rb_str_new2(                          \
-      GraphQLAstName_get_value(           \
-        GraphQLAstNamedType_get_name(     \
-          type                            \
-        )                                 \
-      )                                   \
-    )                                     \
-  );                                      \
-
 VALUE type_set_intern, name_set_intern, add_value_intern, end_visit_intern, begin_visit_intern, line_set_intern, col_set_intern;
 
 inline void set_node_location(const struct GraphQLAstNode *node, VALUE rb_node) {
@@ -127,8 +113,6 @@ void variable_definition_end_visit(const struct GraphQLAstVariableDefinition* no
 int fragment_definition_begin_visit(const struct GraphQLAstFragmentDefinition* node, void* builder_ptr) {
   BEGIN("FragmentDefinition")
   ASSIGN_NAME(GraphQLAstFragmentDefinition_get_name)
-  const struct GraphQLAstNamedType *type = GraphQLAstFragmentDefinition_get_type_condition(node);
-  ASSIGN_NAMED_TYPE(type)
   return 1;
 }
 
@@ -198,11 +182,6 @@ void fragment_spread_end_visit(const struct GraphQLAstFragmentSpread* node, void
 
 int inline_fragment_begin_visit(const struct GraphQLAstInlineFragment* node, void* builder_ptr) {
   BEGIN("InlineFragment")
-  const struct GraphQLAstNamedType *type = GraphQLAstInlineFragment_get_type_condition(node);
-  if (type) {
-    ASSIGN_NAMED_TYPE(type)
-  }
-
   return 1;
 }
 
