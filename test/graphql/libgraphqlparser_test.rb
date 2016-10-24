@@ -51,7 +51,7 @@ describe GraphQL::Libgraphqlparser do
         assert fragment_def.is_a?(GraphQL::Language::Nodes::FragmentDefinition)
         assert_equal "moreNestedFields", fragment_def.name
         assert_equal 1, fragment_def.selections.length
-        assert_equal "NestedType", fragment_def.type
+        assert_equal "NestedType", fragment_def.type.name
         assert_equal 1, fragment_def.directives.length
         assert_equal [17, 5], fragment_def.position
       end
@@ -140,7 +140,7 @@ describe GraphQL::Libgraphqlparser do
       describe "inline fragments" do
         let(:inline_fragment) { query.selections[2] }
         it "gets the type and directives" do
-          assert_equal "OtherType", inline_fragment.type
+          assert_equal "OtherType", inline_fragment.type.name
           assert_equal 2, inline_fragment.selections.length
           assert_equal 1, inline_fragment.directives.length
         end
