@@ -5,18 +5,20 @@ Make [`graphql`](https://github.com/rmosolgo/graphql-ruby) faster with [`libgrap
 It's faster:
 
 ```
-~/projects/graphql-libgraphqlparser $ be ruby benchmark.rb
+~/projects/graphql-libgraphqlparser $ bundle exec ruby benchmark.rb
               user     system      total        real
-Ruby      1.140000   0.010000   1.150000 (  1.161160)
-C         0.000000   0.000000   0.000000 (  0.009008)
-~/projects/graphql-libgraphqlparser $ be ruby benchmark.rb
+Ruby      0.090000   0.000000   0.090000 (  0.088713)
+C         0.010000   0.000000   0.010000 (  0.012827)
+~/projects/graphql-libgraphqlparser $ bundle exec ruby benchmark.rb
               user     system      total        real
-Ruby      1.180000   0.000000   1.180000 (  1.185929)
-C         0.000000   0.000000   0.000000 (  0.008688)
-~/projects/graphql-libgraphqlparser $ be ruby benchmark.rb
+Ruby      0.090000   0.010000   0.100000 (  0.090548)
+C         0.010000   0.000000   0.010000 (  0.013126)
+~/projects/graphql-libgraphqlparser $ bundle exec ruby benchmark.rb
               user     system      total        real
-Ruby      1.220000   0.010000   1.230000 (  1.233795)
-C         0.010000   0.000000   0.010000 (  0.008584)
+Ruby      0.080000   0.000000   0.080000 (  0.090066)
+C         0.020000   0.000000   0.020000 (  0.011790)
+~/projects/graphql-libgraphqlparser $ bundle show graphql
+~/.rbenv/versions/2.1.0/lib/ruby/gems/2.1.0/gems/graphql-0.19.4
 ```
 
 ## Installation
