@@ -1,5 +1,10 @@
 # Changelog
 
+
+# 0.5.2
+
+- Specify dependency of GraphQL < 1.0.0
+
 # 0.5.1
 
 - Fix strings with a null byte but no newline character #16
