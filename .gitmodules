@@ -1,0 +1,6 @@
+[submodule "ext/--force"]
+	path = ext/--force
+	url = https://github.com/graphql/libgraphqlparser
+[submodule "ext/libgraphqlparser"]
+	path = ext/libgraphqlparser
+	url = https://github.com/graphql/libgraphqlparser
