@@ -10,22 +10,28 @@ module GraphQL
       begin
         builder = builder_parse(string)
         builder.document
-      rescue ArgumentError
+      rescue ArgumentError => err
         if index = string.index("\x00")
           string_before_null = string.slice(0, index)
           line = string_before_null.count("\n") + 1
           col = index - (string_before_null.rindex("\n") || 0)
           raise GraphQL::ParseError.new("Invalid null byte in query", line, col, string)
-        end
-        raise
-      rescue ParseError => e
-        error_message = e.message.match(/(\d+)\.(\d+): (.*)/)
-        if error_message
-          line = error_message[1].to_i
-          col = error_message[2].to_i
-          raise GraphQL::ParseError.new(error_message[3], line, col, string)
         else
-          raise GraphQL::ParseError.new(e.message, nil, nil, string)
+          raise err
+        end
+      rescue ParseError => e
+        if string.strip.empty?
+          # Handle an empty string with a blank document
+          GraphQL::Language::Nodes::Document.new(definitions: [])
+        else
+          error_message = e.message.match(/(\d+)\.(\d+): (.*)/)
+          if error_message
+            line = error_message[1].to_i
+            col = error_message[2].to_i
+            raise GraphQL::ParseError.new(error_message[3], line, col, string)
+          else
+            raise GraphQL::ParseError.new(e.message, nil, nil, string)
+          end
         end
       end
     end
