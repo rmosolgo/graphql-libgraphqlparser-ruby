@@ -23,15 +23,31 @@ C         0.020000   0.000000   0.020000 (  0.011790)
 
 ## Installation
 
-This gem depends on [libgraphqlparser](https://github.com/graphql/libgraphqlparser) (>= 0.5.0). You can install it a few ways:
+### Option 1
+
+If you have `cmake` installed, we will build [libgraphqlparser](https://github.com/graphql/libgraphqlparser)
+for you.
+
+Just add this to your Gemfile:
+
+```ruby
+gem "graphql-libgraphqlparser"
+```
+
+And you should be good to go 👍
+
+### Option 2
+
+You can install [libgraphqlparser](https://github.com/graphql/libgraphqlparser) (>= 0.5.0)
+yourself. You can install it a few ways:
 
 - Homebrew: `brew install libgraphqlparser`
 - From Source:
 
   ```
-  wget https://github.com/graphql/libgraphqlparser/archive/v0.5.0.tar.gz
-  tar -xzvf v0.5.0.tar.gz
-  cd libgraphqlparser-0.5.0/ && cmake . && make && make install
+  wget https://github.com/graphql/libgraphqlparser/archive/v0.6.0.tar.gz
+  tar -xzvf v0.6.0.tar.gz
+  cd libgraphqlparser-0.6.0/ && cmake . && make && make install
   ```
 
 - With [`heroku-buildpack-libgraphqlparser`](https://github.com/goco-inc/heroku-buildpack-libgraphqlparser)
