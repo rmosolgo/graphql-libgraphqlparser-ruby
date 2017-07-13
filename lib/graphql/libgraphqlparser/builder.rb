@@ -44,6 +44,8 @@ module GraphQL
         when Nodes::ListLiteral
           # mutability! 🎉
           current.value = node.values
+        when Nodes::NullValue
+          current.value = node
         when Nodes::InputObject
           current.value = node
         when Nodes::Enum
