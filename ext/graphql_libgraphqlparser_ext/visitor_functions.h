@@ -27,5 +27,6 @@ VISITOR_CALLBACKS(enum_value, EnumValue);
 VISITOR_CALLBACKS(list_value, ListValue);
 VISITOR_CALLBACKS(object_value, ObjectValue);
 VISITOR_CALLBACKS(object_field, ObjectField);
+VISITOR_CALLBACKS(null_value, NullValue);
 
 #endif

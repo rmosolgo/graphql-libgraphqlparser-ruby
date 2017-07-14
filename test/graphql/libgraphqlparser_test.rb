@@ -15,7 +15,7 @@ describe GraphQL::Libgraphqlparser do
         field
         anotherField
       }
-
+      aField(anArg: null) { a }
     }
 
     fragment moreNestedFields on NestedType @or(something: "ok") {
@@ -42,7 +42,7 @@ describe GraphQL::Libgraphqlparser do
         assert_equal "getStuff", query.name
         assert_equal "query", query.operation_type
         assert_equal 2, query.variables.length
-        assert_equal 3, query.selections.length
+        assert_equal 4, query.selections.length
         assert_equal 1, query.directives.length
         assert_equal [2, 5], [query.line, query.col]
       end
@@ -95,6 +95,12 @@ describe GraphQL::Libgraphqlparser do
       describe "arguments" do
         let(:literal_argument) { query.selections.first.arguments.last }
         let(:variable_argument) { query.selections.first.arguments.first }
+        let(:null_argument) { query.selections.last.arguments.first }
+
+        it "handles null values for arguments" do
+          assert null_argument.value.is_a?(GraphQL::Language::Nodes::NullValue)
+          assert_equal "null", null_argument.value.name
+        end
 
         it "gets name and literal value" do
           assert_equal "ok", literal_argument.name

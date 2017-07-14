@@ -227,6 +227,16 @@ void named_type_end_visit(const struct GraphQLAstNamedType* node, void* builder_
   end_visit(builder_ptr);
 }
 
+int null_value_begin_visit(const struct GraphQLAstNullValue* node, void* builder_ptr) {
+  VALUE rb_node = build_rb_node((struct GraphQLAstNode*) node, "NullValue", builder_ptr);
+  VALUE rb_string = rb_str_new2("null");
+  rb_funcall(rb_node, name_set_intern, 1, rb_string);
+  return 1;
+}
+
+void null_value_end_visit(const struct GraphQLAstListType* node, void* builder_ptr) {
+  end_visit(builder_ptr);
+}
 
 int float_value_begin_visit(const struct GraphQLAstFloatValue* node, void* builder_ptr) {
   const char* str_float = GraphQLAstFloatValue_get_value(node);

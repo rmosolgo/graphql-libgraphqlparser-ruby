@@ -64,4 +64,5 @@ void Init_graphql_libgraphqlparser_ext() {
   ATTACH_CALLBACKS(list_value);
   ATTACH_CALLBACKS(object_value);
   ATTACH_CALLBACKS(object_field);
+  ATTACH_CALLBACKS(null_value);
 }
