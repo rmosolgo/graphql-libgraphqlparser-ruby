@@ -8,10 +8,14 @@ def build_libgraphql_parser!(libgraphqlparser_path)
 
   build_path = File.join(libgraphqlparser_path, 'build')
 
-  Dir.chdir(libgraphqlparser_path) do
-    system cmake, "-DCMAKE_INSTALL_PREFIX:PATH=#{build_path}"
-    system 'make'
-    system 'make all install'
+  make_success = Dir.chdir(libgraphqlparser_path) do
+    system(cmake, "-DCMAKE_INSTALL_PREFIX:PATH=#{build_path}") &&
+    system('make') &&
+    system('make all install')
+  end
+
+  unless make_success
+    raise "Could not make libgraphqlparser at path #{build_path}"
   end
 
   true
