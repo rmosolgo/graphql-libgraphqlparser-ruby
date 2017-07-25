@@ -1,5 +1,12 @@
 # Changelog
 
+# 1.1.0
+
+- Support `null`
+
+# 1.0.0
+
+- No changes
 
 # 0.5.2
 
