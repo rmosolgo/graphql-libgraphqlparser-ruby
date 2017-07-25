@@ -13,7 +13,6 @@ Gem::Specification.new do |spec|
 
   spec.extensions    = ['ext/graphql_libgraphqlparser_ext/extconf.rb']
   spec.files         = `git ls-files -z`.split("\x0")
-  spec.files        += `cd ext/libgraphqlparser && git ls-files -z`.split("\x0")
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ['lib']
