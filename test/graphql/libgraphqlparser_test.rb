@@ -264,4 +264,20 @@ describe GraphQL::Libgraphqlparser do
       assert_equal 28, err.col
     end
   end
+
+  describe "Compatibility" do
+    TestQuery = GraphQL::ObjectType.define do
+      name "Query"
+      field :int, !types.Int, resolve: ->(*a) { 1 }
+    end
+
+    TestSchema = GraphQL::Schema.define do
+      query(TestQuery)
+    end
+
+    it "works with a schema" do
+      res = TestSchema.execute("{ int }")
+      assert_equal 1, res["data"]["int"]
+    end
+  end
 end
