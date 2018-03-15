@@ -159,7 +159,7 @@ describe GraphQL::Libgraphqlparser do
           let(:query_string) { 'query { ... @skip(if: false) { field } }' }
           let(:inline_fragment) { query.selections[0] }
           it "gets directives and nil type" do
-            assert_equal nil, inline_fragment.type
+            assert_nil inline_fragment.type
             assert_equal 1, inline_fragment.directives.length
           end
         end
@@ -227,7 +227,7 @@ describe GraphQL::Libgraphqlparser do
       it "parses unnamed queries" do
         assert_equal 1, document.definitions.length
         assert_equal "query", operation.operation_type
-        assert_equal nil, operation.name
+        assert_nil operation.name
         assert_equal 3, operation.selections.length
       end
     end
