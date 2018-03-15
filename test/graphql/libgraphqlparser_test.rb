@@ -159,7 +159,7 @@ describe GraphQL::Libgraphqlparser do
           let(:query_string) { 'query { ... @skip(if: false) { field } }' }
           let(:inline_fragment) { query.selections[0] }
           it "gets directives and nil type" do
-            assert_equal nil, inline_fragment.type
+            assert_nil inline_fragment.type
             assert_equal 1, inline_fragment.directives.length
           end
         end
@@ -227,7 +227,7 @@ describe GraphQL::Libgraphqlparser do
       it "parses unnamed queries" do
         assert_equal 1, document.definitions.length
         assert_equal "query", operation.operation_type
-        assert_equal nil, operation.name
+        assert_nil operation.name
         assert_equal 3, operation.selections.length
       end
     end
@@ -262,6 +262,22 @@ describe GraphQL::Libgraphqlparser do
       assert_equal "Invalid null byte in query", err.message
       assert_equal 1, err.line
       assert_equal 28, err.col
+    end
+  end
+
+  describe "Compatibility" do
+    TestQuery = GraphQL::ObjectType.define do
+      name "Query"
+      field :int, !types.Int, resolve: ->(*a) { 1 }
+    end
+
+    TestSchema = GraphQL::Schema.define do
+      query(TestQuery)
+    end
+
+    it "works with a schema" do
+      res = TestSchema.execute("{ int }")
+      assert_equal 1, res["data"]["int"]
     end
   end
 end
