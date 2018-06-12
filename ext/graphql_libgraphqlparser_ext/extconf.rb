@@ -1,11 +1,12 @@
 require 'mkmf'
 
 prefixes = %w(/usr /usr/local)
-if prefix = prefixes.find{ |prefix| Dir["#{prefix}/lib/libgraphqlparser*"].first }
-  dir_config('graphql', "#{prefix}/include/graphqlparser", "#{prefix}/lib")
+if prefix = prefixes.find{ |candidate| Dir["#{candidate}/lib/libgraphqlparser*"].first }
+  dir_config('graphqlparser', "#{prefix}/include/graphqlparser", "#{prefix}/lib")
 else
-  dir_config('graphql')
+  dir_config('graphqlparser')
 end
+
 abort 'missing libgraphqlparser' unless have_library('graphqlparser')
 abort 'missing libgraphqlparser headers' unless have_header('c/GraphQLParser.h')
 

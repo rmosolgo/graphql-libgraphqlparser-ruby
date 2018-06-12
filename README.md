@@ -48,6 +48,19 @@ When you `require` this gem, it overrides `GraphQL.parse`:
 require "graphql/libgraphqlparser"
 ```
 
+## Overriding the location of libgraphqlparser
+
+This gem will search for [libgraphqlparser](https://github.com/graphql/libgraphqlparser) at `/usr` and `/usr/local`. If you follow the official install instructions, you don't need to do anything else. If however you have installed libgraphqlparser at a different location, you will need to specify it during gem install. Note that the headers needed to compile the extension are not located at the standard `include` subdirectory but rather `include/graphqlparser`.
+
+Example override:
+
+```bash
+export LIBGRAPHQLPARSER_PATH=/my-custom-path
+gem install graphql-libgraphqlparser -- \
+  --with-graphqlparser-lib=$LIBGRAPHQLPARSER_PATH/lib \
+  --with-graphqlparser-include=$LIBGRAPHQLPARSER_PATH/include/graphqlparser
+```
+
 ## Libgraphqlparser versions
 
 The Ruby gem expects certain versions of `libgraphqlparser` to be installed. I couldn't figure out how to check this in [`extconf.rb`](#), so I documented it here:

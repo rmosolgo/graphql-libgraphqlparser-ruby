@@ -1,5 +1,9 @@
 # Changelog
 
+# Unreleased
+
+- Support overriding libgraphqlparser install location
+
 # 1.2.0
 
 - Support `tracer:` keyword to `.parse` (supports GraphQL::Tracing) #27
