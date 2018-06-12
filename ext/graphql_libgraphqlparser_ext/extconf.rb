@@ -2,8 +2,12 @@ require 'mkmf'
 
 prefixes = %w(/usr /usr/local)
 if prefix = prefixes.find{ |candidate| Dir["#{candidate}/lib/libgraphqlparser*"].first }
+  # This is unorthodox usage of dir_config. The problem is that libgraphqlparser installs its header
+  # files to a subdirectory of include/, so to find them we have to specify a custom "default" location
+  # which is relative to the guessed location of the install. In other words, not a "default" at all.
   dir_config('graphqlparser', "#{prefix}/include/graphqlparser", "#{prefix}/lib")
 else
+  # Failing that, fallback to defaults (/include and /lib)
   dir_config('graphqlparser')
 end
 
