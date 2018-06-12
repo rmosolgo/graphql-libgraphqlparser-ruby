@@ -1,8 +1,8 @@
 # Changelog
 
-# Unreleased
+# 1.3.0
 
-- Support overriding libgraphqlparser install location
+- Support overriding libgraphqlparser install location (use `--with-graphqlparser-xxx` options to override) #29
 
 # 1.2.0
 
